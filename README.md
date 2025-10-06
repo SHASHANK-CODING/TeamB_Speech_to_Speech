@@ -1,4 +1,4 @@
-# TeamB_Speech_to_Speech
+# TeamB_Speech_to_Speech_Milestone_2
 # 🌍 Real-Time Speech Translator App
 
 This project is a **multilingual real-time translator** built with **Flask, Azure Cognitive Services (Speech & Translator API), and BERTScore evaluation**.
