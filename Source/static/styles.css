@@ -1,0 +1,167 @@
+
+
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    background: linear-gradient(135deg, #067cae, #1b4cc8, #bc20db);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+
+    /* Allow scrolling */
+    min-height: 100vh;   /* instead of fixed height */
+    overflow-y: auto;
+
+    /* Remove vertical centering */
+    display: block;
+}
+
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating cubes */
+.cube {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255,255,255,0.2);
+    animation: float 20s infinite;
+    border-radius: 5px;
+}
+.cube:nth-child(1) { left: 10%; animation-duration: 18s; }
+.cube:nth-child(2) { left: 20%; animation-duration: 22s; }
+.cube:nth-child(3) { left: 30%; animation-duration: 25s; }
+.cube:nth-child(4) { left: 50%; animation-duration: 20s; }
+.cube:nth-child(5) { left: 70%; animation-duration: 17s; }
+.cube:nth-child(6) { left: 90%; animation-duration: 19s; }
+
+@keyframes float {
+    from { top: 100%; transform: rotate(0deg); }
+    to { top: -10%; transform: rotate(360deg); }
+}
+
+
+
+
+.wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    width: 90%;
+    background: rgba(0,0,0,0.6);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.5);
+    margin: 40px auto;   /* centers horizontally and adds top-bottom spacing */
+}
+
+/* Title */
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Upload form */
+form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+form input {
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+}
+form button {
+    background: #ff9800;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+form button:hover {
+    background: #e68900;
+}
+
+/* Cards for results */
+.card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 12px 0;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.4);
+}
+.card h3 {
+    margin-top: 0;
+    font-size: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 6px;
+}
+
+/* Translation list */
+#translations li, #bertScores li {
+    margin: 8px 0;
+    padding: 8px;
+    border-radius: 6px;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#translations a {
+    background: #2196f3;
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 7px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+#translations a:hover {
+    background: #1976d2;
+}
+
+/* Download all button */
+#downloadAllBtn {
+    background: #4caf50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+#downloadAllBtn:hover {
+    background: #388e3c;
+}
+
+.translation-actions {
+    display: flex;
+    gap: 10px;         /* space between buttons */
+    margin-left: auto; /* pushes buttons to the right */
+}
+
+.translation-actions a {
+    background: #2196f3;
+    color: #fff;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+.translation-actions a:hover {
+    background: #1976d2;
+}
+

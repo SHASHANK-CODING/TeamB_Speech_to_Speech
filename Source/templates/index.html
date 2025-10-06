@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎤 Speech to Text & Translation</title>
+  <style>
+    button { padding: 10px 20px; margin: 10px; font-size: 16px; }
+    #recognized, #translations { margin-top: 15px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <h1>🎤 Speech to Text & Translation</h1>
+  
+  <button id="toggleBtn">Start Recording</button>
+  
+  <div id="recognized"><b>Recognized Speech:</b> <span></span></div>
+  <div id="translations"><b>Translations:</b> <pre></pre></div>
+
+  <script>
+    let mediaRecorder;
+    let audioChunks = [];
+    let isRecording = false;
+
+    document.getElementById("toggleBtn").addEventListener("click", () => {
+      if (!isRecording) {
+        startRecording();
+      } else {
+        stopRecording();
+      }
+    });
+
+    async function startRecording() {
+      let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      // ⚠️ Browser does NOT support audio/wav in MediaRecorder
+      // So we use default (webm/opus) and convert in Flask backend
+      mediaRecorder = new MediaRecorder(stream);
+
+      audioChunks = [];
+      mediaRecorder.ondataavailable = e => {
+        if (e.data.size > 0) audioChunks.push(e.data);
+      };
+
+      mediaRecorder.onstop = async () => {
+        let blob = new Blob(audioChunks, { type: "audio/webm" });
+        let formData = new FormData();
+        formData.append("audio", blob, "recording.webm");
+
+        let response = await fetch("/process_audio", {
+          method: "POST",
+          body: formData
+        });
+
+        let data = await response.json();
+        document.querySelector("#recognized span").innerText = data.input_speech || "No speech";
+        
+        let translationsText = "";
+        for (let [lang, text] of Object.entries(data.translations || {})) {
+          translationsText += `${lang}: ${text}\n`;
+        }
+        document.querySelector("#translations pre").innerText = translationsText;
+      };
+
+      mediaRecorder.start();
+      isRecording = true;
+      document.getElementById("toggleBtn").innerText = "Stop Recording";
+    }
+
+    function stopRecording() {
+      mediaRecorder.stop();
+      isRecording = false;
+      document.getElementById("toggleBtn").innerText = "Start Recording";
+    }
+  </script>
+</body>
+</html>
